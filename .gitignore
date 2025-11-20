@@ -1,0 +1,11 @@
+# mdBook build output
+book/
+
+# Rust build output (for examples/tutorial code)
+target/
+
+# Editor/system files
+.DS_Store
+*.swp
+.idea/
+.vscode/
