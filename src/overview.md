@@ -1,147 +1,49 @@
 # Overview
 
-Welcome to the Truck world!
-Truck is a pure-Rust CAD kernel that aims to provide modern, safe, and highly modular tools for geometric modeling.
-This book will guide you through the basics of using Truck.
+Welcome to Truck, a pure-Rust CAD kernel with modern, modular tools for geometric modeling. This book walks through meshes, B-reps, and rendering with Truck.
 
-The Three Core Ideas Behind Truck
+## The three core ideas
 
-Truck’s design philosophy revolves around three complementary elements:
+1. **Trendy tools**: Rust for safety/performance; WebGPU for fast, cross-platform graphics and compute.
+2. **Traditional arts (modernized)**: Re-implements classic CAD concepts (B-rep, NURBS) with Rust/WebGPU for stability and testability.
+3. **Theseus’ Ship (modular design)**: Small, replaceable crates so you can swap or evolve parts independently without breaking the whole system.
 
-1. Trendy Tools
+## Who this book is for
 
-Truck is built with Rust and WebGPU, two technologies pushing the next generation of performance-focused engineering software.
+- **Users**: Build apps with Truck and other libraries.
+- **Developers**: Create new geometric tools/elements on Truck.
+- **Contributors**: Contribute directly to Truck’s codebase.
 
-Rust gives strong memory safety and powerful optimizations.
+This tutorial focuses primarily on Users.
 
-WebGPU allows fast, cross-platform graphics and computational workloads.
+## Sample code
 
-Together, they help Truck’s crates achieve high performance while remaining safe and maintainable.
+All examples live at https://github.com/ricosjp/truck-tutorial-code/tree/v0.1
 
-2. Traditional Arts (Modernized)
+- `src/section2_1.rs` corresponds to Section 2.1 “First Triangle”.
+- Run with: `cargo run --bin section2_1`
 
-Truck re-implements classic CAD concepts—such as B-rep and NURBS—but in a modern environment using Rust and WebGPU.
+## System requirements
 
-Rust prevents crashes that commonly happen in low-level CAD code.
+- Rust toolchain
+- WebGPU-compatible backend: Vulkan, Metal, or DirectX12
+- CMake (only for running tests)
 
-Cargo and the Rust ecosystem make continuous integration and testing much smoother.
+### Windows
 
-The goal is to take the best ideas from decades of CAD history but build them with a clean, modern foundation.
+- Keep Windows 10 up to date.
+- Install Visual Studio C++ Build Tools (update if already installed).
+- Install Rust: https://www.rust-lang.org/tools/install (choose MSVC toolchain; `rustup update` if already installed).
+- Notes: Tested with MSVC. Vulkan/DirectX12 should work on current Windows 10. WSL lacks Vulkan; Windows 8 likely unsupported.
 
-3. Theseus’ Ship (Modular Design)
+### macOS
 
-Inspired by the “Ship of Theseus,” Truck is divided into small, replaceable crates instead of one giant system.
+- Keep macOS up to date.
+- Install Rust: `curl https://sh.rustup.rs -sSf | sh` (or `rustup update` if installed).
+- Notes: Metal works out of the box; no extra GPU setup needed.
 
-Why?
+### Linux
 
-Individual crates can evolve independently.
-
-You can replace or upgrade only the pieces you need.
-
-Complex expansions won’t break the entire system.
-
-This modular structure keeps Truck flexible and future-proof.
-
-Structure of This Book
-
-To help different types of users learn effectively, we consider three levels of involvement:
-
-Users
-
-People who want to build applications using Truck and other libraries.
-
-Developers
-
-People who create new geometric elements or tools on top of Truck and publish them for others.
-
-Contributors
-
-People who contribute directly to Truck’s codebase through pull requests.
-
-This tutorial focuses mainly on Users who want to learn how to work with Truck and make things using it.
-
-Sample Code
-
-All full code examples from this tutorial are available in this repository:
-
-https://github.com/ricosjp/truck-tutorial-code/tree/v0.1
-
-For example:
-
-The file src/section2_1.rs corresponds to Section 2.1 (“First Triangle”).
-
-You can run it with:
-
-cargo run --bin section2_1
-
-System Requirements
-
-To use Truck, you need:
-
-A working Rust development environment.
-
-A GPU backend supported by WebGPU: Vulkan, Metal, or DirectX12.
-
-CMake (only required for running tests; not required for using Truck as a library).
-
-Setup instructions differ by platform:
-
-Windows
-
-Steps:
-
-Make sure Windows 10 is up to date.
-
-Install “Visual Studio C++ Build Tools.”
-If already installed, update them.
-
-Install Rust by using the official installer:
-https://www.rust-lang.org/tools/install
-
-Choose the MSVC toolchain.
-If Rust is already installed, run rustup update.
-
-Notes:
-
-Truck is tested only with the MSVC Rust toolchain.
-
-Vulkan and DirectX12 should work on an up-to-date Windows 10 system.
-
-Truck does not run correctly on WSL due to missing Vulkan support.
-
-Windows 8 is likely unsupported.
-
-macOS
-
-Steps:
-
-Make sure macOS is up to date.
-
-Install Rust using:
-
-curl https://sh.rustup.rs -sSf | sh
-
-
-If Rust is already installed, run:
-
-rustup update
-
-
-Notes:
-
-Metal (Apple’s GPU API) works out of the box.
-
-No additional GPU setup is needed.
-
-Linux
-
-Linux is currently not officially supported because Truck hasn't been tested thoroughly on Linux native environments.
-
-You may try installing Vulkan manually.
-A helpful reference:
-https://vulkan.lunarg.com/doc/sdk/1.2.162.1/linux/getting_started_ubuntu.html
-
-Testing inside official Docker containers did not work.
-
-CI builds currently use:
-nvidia/vulkan (Docker Hub)
+- Not officially supported yet (limited testing).
+- You can try installing Vulkan manually; see https://vulkan.lunarg.com/doc/sdk/1.2.162.1/linux/getting_started_ubuntu.html
+- CI builds use the `nvidia/vulkan` Docker image; official containers didn’t work for testing.
