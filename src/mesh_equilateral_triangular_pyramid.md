@@ -68,7 +68,7 @@ That’s all you need.
     PolygonMesh::new(attrs, faces)
 ```
 
-Index mapping:
+Index mapping (vertices):
 
 ```
       3
