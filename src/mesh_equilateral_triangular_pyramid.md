@@ -1,4 +1,4 @@
-# Equilateral Triangular Pyramid
+# Tetrahedron (Equilateral Triangular Pyramid)
 
 Let's build an equilateral triangular pyramid (a [tetrahedron](https://en.wikipedia.org/wiki/Tetrahedron)) using vertex lists and face indices.
 

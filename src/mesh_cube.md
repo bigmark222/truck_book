@@ -1,6 +1,6 @@
-# Cube
+# Hexahedron (Cube)
 
-Now let's build a cube (a [hexahedron](https://en.wikipedia.org/wiki/Hexahedron)) from vertex lists and quad faces.
+Now let's build a [hexahedron](https://en.wikipedia.org/wiki/Hexahedron) (cube) from vertex lists and quad faces.
 
 Reference: [github.com/ricosjp/truck-tutorial-code/blob/v0.6/chapter2/src/section2_2.rs](https://github.com/ricosjp/truck-tutorial-code/blob/v0.6/chapter2/src/section2_2.rs)
 
