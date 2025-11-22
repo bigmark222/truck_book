@@ -44,6 +44,7 @@ use truck_meshalgo::prelude::*;
 fn main() {
     // Vertex positions
     let positions = vec![
+        //Point3::new(X, Y, Z),
         Point3::new(0.0, 0.0, 0.0),
         Point3::new(1.0, 0.0, 0.0),
         Point3::new(0.5, f64::sqrt(3.0) / 2.0, 0.0),

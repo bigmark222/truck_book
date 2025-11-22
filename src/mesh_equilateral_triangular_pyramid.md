@@ -19,10 +19,11 @@ fn trigonal_pyramid() -> PolygonMesh {
 ```rust
 
     let positions = vec![
-        Point3::new(0.0, 0.0, 0.0),
-        Point3::new(1.0, 0.0, 0.0),
-        Point3::new(0.5, f64::sqrt(3.0) / 2.0, 0.0),
-        Point3::new(0.5, f64::sqrt(3.0) / 6.0, f64::sqrt(6.0) / 3.0),
+        //Point3::new(X, Y, Z),
+        Point3::new(0.0, 0.0, 0.0), //Base 1
+        Point3::new(1.0, 0.0, 0.0), //Base 2
+        Point3::new(0.5, f64::sqrt(3.0) / 2.0, 0.0), //Base 3
+        Point3::new(0.5, f64::sqrt(3.0) / 6.0, f64::sqrt(6.0) / 3.0), //Base 4
     ];
 ```
 ### Step 2 — attributes (positions only)
