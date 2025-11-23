@@ -13,6 +13,8 @@ pub mod hexahedron; //add this
 pub use hexahedron::hexahedron; //add this
 ```
 
+## Construct Main Function
+
 `src/hexahedron.rs`:
 
 ```rust
@@ -21,6 +23,14 @@ use truck_meshalgo::prelude::*;
 
 /// Unit cube (hexahedron) using quads.
 pub fn hexahedron() -> PolygonMesh {
+
+    //PLACE STEP 1-4 HERE
+
+}
+```
+
+#### Step 1: Define vertex positions
+```rust
     let positions = vec![
         Point3::new(0.0, 0.0, 0.0),
         Point3::new(1.0, 0.0, 0.0),
@@ -31,12 +41,16 @@ pub fn hexahedron() -> PolygonMesh {
         Point3::new(1.0, 1.0, 1.0),
         Point3::new(0.0, 1.0, 1.0),
     ];
-
+```
+#### Step 2: Build attribute set
+```rust
     let attrs = StandardAttributes {
         positions,
         ..Default::default()
     };
-
+```
+#### Step 3: Define mesh faces
+```rust
     let faces = Faces::from_iter([
         [3, 2, 1, 0], // bottom
         [0, 1, 5, 4], // front
@@ -45,12 +59,15 @@ pub fn hexahedron() -> PolygonMesh {
         [3, 0, 4, 7], // left
         [4, 5, 6, 7], // top
     ]);
-
-    PolygonMesh::new(attrs, faces)
-}
 ```
 
 ![Cube illustration](images/cube.svg)
+
+
+#### Step 4: Construct the mesh
+```rust
+    PolygonMesh::new(attrs, faces)
+```
 
 ## Export the cube
 

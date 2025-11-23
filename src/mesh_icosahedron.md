@@ -1,6 +1,6 @@
 # Icosahedron
 
-An icosahedron is the dual of a dodecahedron: each dodecahedron face center becomes a vertex; the three centers around each original dodecahedron vertex become one triangle.
+An icosahedron is the [dual](https://en.wikipedia.org/wiki/Dual_polyhedron) of a dodecahedron: each dodecahedron face center becomes a vertex; the three centers around each original dodecahedron vertex become one triangle.
 
 Steps:
 - Find every dodecahedron face center.
@@ -22,6 +22,7 @@ use truck_meshalgo::prelude::*;
 pub mod icosahedron;
 pub use icosahedron::icosahedron;
 ```
+## Construct Main Function
 
 `src/icosahedron.rs`:
 
@@ -33,10 +34,19 @@ use truck_meshalgo::prelude::*;
 
 /// Icosahedron via dual of a dodecahedron.
 pub fn icosahedron() -> PolygonMesh {
+
+    //PLACE STEP 1-5 HERE
+
+}
+```
+
+#### Step 1: Start from a dodecahedron
+```rust
     let dodeca: PolygonMesh = dodecahedron();
     let d_positions = dodeca.positions();
-
-    // 20 vertices: normalized centroids of dodecahedron faces
+```
+#### Step 2: Build vertex positions from face centroids
+```rust
     let positions: Vec<Point3> = dodeca
         .face_iter()
         .map(|face| {
@@ -47,8 +57,9 @@ pub fn icosahedron() -> PolygonMesh {
             Point3::from_vec(centroid.normalize())
         })
         .collect();
-
-    // 20 faces: for each original vertex, collect its touching faces
+```
+#### Step 3: Build faces by collecting touching centroids
+```rust
     let mut faces: Faces = (0..20)
         .map(|i| {
             dodeca
@@ -59,8 +70,9 @@ pub fn icosahedron() -> PolygonMesh {
                 .collect::<Vec<usize>>()
         })
         .collect();
-
-    // Outward winding
+```
+#### Step 4: Fix winding so normals point outward
+```rust
     faces.face_iter_mut().for_each(|face| {
         let p: Vec<Point3> = face.iter().map(|v| positions[v.pos]).collect();
         let center = p[0].to_vec() + p[1].to_vec() + p[2].to_vec();
@@ -69,7 +81,9 @@ pub fn icosahedron() -> PolygonMesh {
             face.swap(0, 1);
         }
     });
-
+```
+#### Step 5: Construct the mesh
+```rust
     PolygonMesh::new(
         StandardAttributes {
             positions,
@@ -77,7 +91,6 @@ pub fn icosahedron() -> PolygonMesh {
         },
         faces,
     )
-}
 ```
 
 ## Export the icosahedron

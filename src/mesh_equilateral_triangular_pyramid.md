@@ -13,6 +13,8 @@ pub mod tetrahedron; // add this
 pub use tetrahedron::tetrahedron; // add this
 ```
 
+## Construct Main Function
+
 `src/tetrahedron.rs`:
 
 ```rust
@@ -21,29 +23,37 @@ use truck_meshalgo::prelude::*;
 
 /// Equilateral tetrahedron (triangular pyramid).
 pub fn tetrahedron() -> PolygonMesh {
+
+    //PLACE STEP 1-4 HERE
+
+}
+```
+
+#### Step 1: Define vertex positions
+```rust
     let positions = vec![
         Point3::new(0.0, 0.0, 0.0), // base 1
         Point3::new(1.0, 0.0, 0.0), // base 2
         Point3::new(0.5, f64::sqrt(3.0) / 2.0, 0.0), // base 3
         Point3::new(0.5, f64::sqrt(3.0) / 6.0, f64::sqrt(6.0) / 3.0), // apex
     ];
-
+```
+#### Step 2: Build attribute set
+```rust
     let attrs = StandardAttributes {
         positions,
         ..Default::default()
     };
-
+```
+#### Step 3: Define mesh faces
+```rust
     let faces = Faces::from_iter([
         [2, 1, 0], // base
         [0, 1, 3], // side 1
         [1, 2, 3], // side 2
         [2, 0, 3], // side 3
     ]);
-
-    PolygonMesh::new(attrs, faces)
-}
 ```
-
 ![Trigonal pyramid illustration](images/pyramid.svg)
 
 <details>
@@ -57,6 +67,11 @@ When looking at the outside, list triangle vertices counter-clockwise.
 ![Triangle face winding order in Unity](images/winding-order=triangle-unity.png)
 
 </details>
+
+#### Step 4: Construct the mesh
+```rust
+    PolygonMesh::new(attrs, faces)
+```
 
 ## Export the tetrahedron
 

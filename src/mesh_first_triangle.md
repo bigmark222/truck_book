@@ -18,6 +18,7 @@ pub fn write_polygon(mesh: &PolygonMesh, path: &str) {
 pub mod triangle; //add this
 pub use triangle::triangle; //add this
 ```
+## Construct Main Function
 
 `src/triangle.rs`:
 
@@ -27,32 +28,69 @@ use truck_meshalgo::prelude::*;
 
 /// A single equilateral triangle in the XY plane.
 pub fn triangle() -> PolygonMesh {
+
+    //PLACE STEP 1-4 HERE
+
+}
+```
+#### Step 1: Define vertex positions
+```rust
     let positions = vec![
         Point3::new(0.0, 0.0, 0.0),
         Point3::new(1.0, 0.0, 0.0),
         Point3::new(0.5, f64::sqrt(3.0) / 2.0, 0.0),
     ];
+```
+<details>
+<summary>Explanation</summary>
 
+Create three `Point3` coordinates that form an equilateral triangle on the XY plane. Two points sit on the X axis at y = 0, and the third is lifted to `sqrt(3)/2` so all sides are length 1. These positions are the raw vertex data the mesh will consume.
+
+</details>
+
+#### Step 2: Build attribute set
+
+```rust
     let attrs = StandardAttributes {
         positions,
         ..Default::default()
     };
-
-    let faces = Faces::from_iter([[0, 1, 2]]);
-
-    PolygonMesh::new(attrs, faces)
-}
 ```
+<details>
+<summary>Explanation</summary>
+
+Wrap the vertex positions into the `StandardAttributes` container, which is where meshes expect per-vertex data (positions, normals, UVs, etc.). We only set positions and leave every other attribute at its default.
+
+</details>
+
+#### Step 3: Define mesh faces
+
+```rust
+    let faces = Faces::from_iter([[0, 1, 2]]);
+```
+<details>
+<summary>Explanation</summary>
+
+Specify the triangle’s topology by listing vertex indices. The single face references vertices 0, 1, and 2 in counter-clockwise order, which sets the face normal to point along +Z.
+
+</details>
+
+#### Step 4: Construct the mesh
+
+```rust
+    PolygonMesh::new(attrs, faces)
+
+```
+<details>
+<summary>Explanation</summary>
+
+Assemble the mesh by pairing the attribute data with the face list. The returned `PolygonMesh` is ready to render or export (e.g., via `write_polygon` to an OBJ file).
+
+</details>
 
 ## Export the triangle
 
-From the crate root:
-
-```bash
-cargo test -- --nocapture
-```
-
-Or add a tiny example at `examples/triangle.rs`:
+Add a tiny example at `examples/triangle.rs`:
 
 ```rust
 fn main() {

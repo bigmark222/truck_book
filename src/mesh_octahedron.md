@@ -15,6 +15,8 @@ pub mod octahedron;
 pub use octahedron::octahedron;
 ```
 
+## Construct Main Function
+
 `src/octahedron.rs`:
 
 ```rust
@@ -23,6 +25,14 @@ use truck_meshalgo::prelude::*;
 
 /// Octahedron with vertices on the coordinate axes.
 pub fn octahedron() -> PolygonMesh {
+
+    //PLACE STEP 1-4 HERE
+
+}
+```
+
+#### Step 1: Define vertex positions
+```rust
     let positions = vec![
         Point3::new(-1.0, 0.0, 0.0), // -X
         Point3::new(1.0, 0.0, 0.0),  // +X
@@ -31,12 +41,16 @@ pub fn octahedron() -> PolygonMesh {
         Point3::new(0.0, 0.0, -1.0), // -Z
         Point3::new(0.0, 0.0, 1.0),  // +Z
     ];
-
+```
+#### Step 2: Build attribute set
+```rust
     let attrs = StandardAttributes {
         positions,
         ..Default::default()
     };
-
+```
+#### Step 3: Define mesh faces
+```rust
     let faces = Faces::from_iter([
         [0, 4, 2],
         [2, 4, 1],
@@ -47,9 +61,10 @@ pub fn octahedron() -> PolygonMesh {
         [1, 3, 5],
         [3, 0, 5],
     ]);
-
+```
+#### Step 4: Construct the mesh
+```rust
     PolygonMesh::new(attrs, faces)
-}
 ```
 
 ## Export the octahedron

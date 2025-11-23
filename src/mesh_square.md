@@ -16,6 +16,7 @@ use truck_meshalgo::prelude::*;
 pub mod square; // add this
 pub use square::square; // add this
 ```
+## Construct Main Function
 
 `src/square.rs`:
 
@@ -25,28 +26,41 @@ use truck_meshalgo::prelude::*;
 
 /// A unit square in the XY plane made from two triangles.
 pub fn square() -> PolygonMesh {
+
+    //PLACE STEP 1-4 HERE
+
+}
+```
+
+#### Step 1: Define vertex positions
+```rust
     let positions = vec![
         Point3::new(0.0, 0.0, 0.0), // bottom-left
         Point3::new(1.0, 0.0, 0.0), // bottom-right
         Point3::new(1.0, 1.0, 0.0), // top-right
         Point3::new(0.0, 1.0, 0.0), // top-left
     ];
-
+```
+#### Step 2: Build attribute set
+```rust
     let attrs = StandardAttributes {
         positions,
         ..Default::default()
     };
-
+```
+#### Step 3: Define mesh faces
+```rust
     let faces = Faces::from_iter([
         [0, 1, 2], // bottom-right triangle
         [0, 2, 3], // top-left triangle
     ]);
-
+```
+#### Step 4: Construct the mesh
+```rust
     PolygonMesh::new(attrs, faces)
-}
 ```
 
-Prefer a single quad? Swap the faces line for:
+Prefer a single quad? Swap the faces line in Step 3 for:
 
 ```rust
     let faces = Faces::from_iter([[0, 1, 2, 3]]);

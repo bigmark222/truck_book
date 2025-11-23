@@ -38,41 +38,18 @@ pub fn write_polygon(mesh: &PolygonMesh, path: &str) {
 // pub use triangle::triangle;
 ```
 
-## 4) Add shapes in their own files
-
-Example: `src/triangle.rs` with `pub fn triangle() -> PolygonMesh { ... }`, then update `src/lib.rs`:
-
-```rust
-pub mod triangle;
-pub use triangle::triangle;
-```
-
-Repeat for `square`, `tetrahedron`, `hexahedron`, `octahedron`, `dodecahedron`, `icosahedron`.
-
-## 5) Export from examples
-
-Place small runners in `examples/` to write OBJs, e.g. `examples/triangle.rs`:
-
-```rust
-fn main() {
-    let mesh = truck_meshes::triangle();
-    truck_meshes::write_polygon(&mesh, "triangle.obj");
-}
-```
-
-Run with `cargo run --example triangle`.
-
 <details>
-<summary>File tree after adding the triangle</summary>
+<summary>File tree:</summary>
 
 ```
 truck_meshes/
 ├─ Cargo.toml
 ├─ src/
-│  ├─ lib.rs
-│  └─ triangle.rs
+│  └─ lib.rs
+│ 
 └─ examples/
-   └─ triangle.rs
+   └─ 
+   
 ```
 
 </details>

@@ -17,6 +17,8 @@ pub mod dodecahedron;
 pub use dodecahedron::dodecahedron;
 ```
 
+## Construct Main Function
+
 `src/dodecahedron.rs`:
 
 ```rust
@@ -25,6 +27,14 @@ use truck_meshalgo::prelude::*;
 
 /// Dodecahedron built from a cube plus roof vertices.
 pub fn dodecahedron() -> PolygonMesh {
+
+    //PLACE STEP 1-4 HERE
+
+}
+```
+
+#### Step 1: Define helper scalars and vertex positions
+```rust
     let a = f64::sqrt(3.0) / 3.0; // half cube edge
     let l = 2.0 * a / (1.0 + f64::sqrt(5.0)); // half dodeca edge
     let d = f64::sqrt(1.0 - l * l); // other coordinate by Pythagoras
@@ -51,12 +61,25 @@ pub fn dodecahedron() -> PolygonMesh {
         Point3::new(l, 0.0, -d),
         Point3::new(-l, 0.0, -d),
     ];
+```
+<details>
+<summary>Explanation</summary>
 
+The hexahedron’s edges act as diagonals of regular pentagons, so each dodecahedron edge equals the cube edge divided by the golden ratio. The “roof” vertices have one coordinate at zero; solving the remaining coordinate with the Pythagorean theorem gives the helper scalars `a`, `l`, and `d` used for all 20 vertex positions.
+
+</details>
+
+#### Step 2: Build attribute set
+
+```rust
     let attrs = StandardAttributes {
         positions,
         ..Default::default()
     };
+```
 
+#### Step 3: Define mesh faces
+```rust
     let faces = Faces::from_iter([
         [4, 14, 5, 17, 16],
         [6, 13, 7, 16, 17],
@@ -71,9 +94,18 @@ pub fn dodecahedron() -> PolygonMesh {
         [3, 12, 2, 18, 19],
         [3, 19, 0, 11, 10],
     ]);
+```
+<details>
+<summary>Explanation</summary>
 
+Each line is one pentagonal face, listing which vertices to connect by their index in the `positions` list (e.g., `[4, 14, 5, 17, 16]` means positions 4→14→5→17→16). The vertices are ordered counter-clockwise as seen from outside the shape so the face normal points outward for correct lighting.
+
+</details>
+
+#### Step 4: Construct the mesh
+
+```rust
     PolygonMesh::new(attrs, faces)
-}
 ```
 
 ## Export the dodecahedron
@@ -158,6 +190,7 @@ use std::iter::FromIterator;
 use truck_meshalgo::prelude::*;
 
 pub fn dodecahedron() -> PolygonMesh {
+
     let a = f64::sqrt(3.0) / 3.0;
     let l = 2.0 * a / (1.0 + f64::sqrt(5.0));
     let d = f64::sqrt(1.0 - l * l);
@@ -206,6 +239,7 @@ pub fn dodecahedron() -> PolygonMesh {
     ]);
 
     PolygonMesh::new(attrs, faces)
+
 }
 ```
 
