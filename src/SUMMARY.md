@@ -2,6 +2,7 @@
 
 - [Chapter 1: Overview](overview.md)
 - [Chapter 2: Mesh](mesh.md)
+    - [Initial Project Setup](initial_setup.md)
     - [(2D) Polygons](polygons_overview.md)
         - [Triangle](mesh_first_triangle.md)
         - [Square](mesh_square.md)

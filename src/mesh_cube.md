@@ -1,23 +1,26 @@
 # Hexahedron (Cube)
 
-Now let's build a [hexahedron](https://en.wikipedia.org/wiki/Hexahedron) (cube) from vertex lists and quad faces.
+## Add the hexahedron module
 
-Reference: [github.com/ricosjp/truck-tutorial-code/blob/v0.6/chapter2/src/section2_2.rs](https://github.com/ricosjp/truck-tutorial-code/blob/v0.6/chapter2/src/section2_2.rs)
-
-## Cube mesh
+`src/lib.rs` additions:
 
 ```rust
-/// Create a cube
-fn cube() -> PolygonMesh {
+use std::iter::FromIterator;
+use truck_meshalgo::prelude::*;
 
-    //PLACE STEPS 1-4 IN HERE
-
-}
+// ...keep earlier functions: write_polygon, triangle, square, tetrahedron...
+pub mod hexahedron; //add this
+pub use hexahedron::hexahedron; //add this
 ```
 
-### Step 1 — vertex positions
+`src/hexahedron.rs`:
 
 ```rust
+use std::iter::FromIterator;
+use truck_meshalgo::prelude::*;
+
+/// Unit cube (hexahedron) using quads.
+pub fn hexahedron() -> PolygonMesh {
     let positions = vec![
         Point3::new(0.0, 0.0, 0.0),
         Point3::new(1.0, 0.0, 0.0),
@@ -28,20 +31,12 @@ fn cube() -> PolygonMesh {
         Point3::new(1.0, 1.0, 1.0),
         Point3::new(0.0, 1.0, 1.0),
     ];
-```
 
-### Step 2 — attributes (positions only)
-
-```rust
     let attrs = StandardAttributes {
         positions,
         ..Default::default()
     };
-```
 
-### Step 3 — faces (0-based indices)
-
-```rust
     let faces = Faces::from_iter([
         [3, 2, 1, 0], // bottom
         [0, 1, 5, 4], // front
@@ -50,34 +45,122 @@ fn cube() -> PolygonMesh {
         [3, 0, 4, 7], // left
         [4, 5, 6, 7], // top
     ]);
-```
 
-### Step 4 — build the mesh
-
-```rust
     PolygonMesh::new(attrs, faces)
-```
-
-### Step 5 - Create Write to OBJ Function
-
-```rust
-/// Output the contents of `polygon` to the file specified by `path`.
-fn write_polygon(polygon: &PolygonMesh, path: &str) {
-    let mut obj = std::fs::File::create(path).unwrap();
-    obj::write(polygon, &mut obj).unwrap();
 }
 ```
 
-### Step 6 - Insert that Function into the Main Function.
+![Cube illustration](images/cube.svg)
+
+## Export the cube
+
+Add `examples/hexahedron.rs`:
 
 ```rust
 fn main() {
-    write_polygon(&cube(), "cube.obj");
+    let mesh = truck_meshes::hexahedron();
+    truck_meshes::write_polygon(&mesh, "cube.obj");
 }
 ```
 
-#### Run:
+Run it:
 
 ```bash
-cargo run
+cargo run --example hexahedron
 ```
+
+<details>
+<summary>File tree after this step</summary>
+
+```
+truck_meshes/
+├─ Cargo.toml
+├─ src/
+│  ├─ lib.rs
+│  ├─ triangle.rs
+│  ├─ square.rs
+│  ├─ tetrahedron.rs
+│  └─ hexahedron.rs
+└─ examples/
+   ├─ triangle.rs
+   ├─ square.rs
+   ├─ tetrahedron.rs
+   └─ hexahedron.rs
+```
+
+</details>
+
+<details>
+<summary>Full code:</summary>
+
+`src/lib.rs`:
+
+```rust
+use std::iter::FromIterator;
+use truck_meshalgo::prelude::*;
+
+/// Write any mesh to an OBJ file.
+pub fn write_polygon(mesh: &PolygonMesh, path: &str) {
+    let mut obj = std::fs::File::create(path).unwrap();
+    obj::write(mesh, &mut obj).unwrap();
+}
+
+pub mod triangle;
+pub use triangle::triangle;
+
+pub mod square;
+pub use square::square;
+
+pub mod tetrahedron;
+pub use tetrahedron::tetrahedron;
+
+pub mod hexahedron;
+pub use hexahedron::hexahedron;
+```
+
+`src/hexahedron.rs`:
+
+```rust
+use std::iter::FromIterator;
+use truck_meshalgo::prelude::*;
+
+pub fn hexahedron() -> PolygonMesh {
+    let positions = vec![
+        Point3::new(0.0, 0.0, 0.0),
+        Point3::new(1.0, 0.0, 0.0),
+        Point3::new(1.0, 1.0, 0.0),
+        Point3::new(0.0, 1.0, 0.0),
+        Point3::new(0.0, 0.0, 1.0),
+        Point3::new(1.0, 0.0, 1.0),
+        Point3::new(1.0, 1.0, 1.0),
+        Point3::new(0.0, 1.0, 1.0),
+    ];
+
+    let attrs = StandardAttributes {
+        positions,
+        ..Default::default()
+    };
+
+    let faces = Faces::from_iter([
+        [3, 2, 1, 0],
+        [0, 1, 5, 4],
+        [1, 2, 6, 5],
+        [2, 3, 7, 6],
+        [3, 0, 4, 7],
+        [4, 5, 6, 7],
+    ]);
+
+    PolygonMesh::new(attrs, faces)
+}
+```
+
+`examples/hexahedron.rs`:
+
+```rust
+fn main() {
+    let mesh = truck_meshes::hexahedron();
+    truck_meshes::write_polygon(&mesh, "cube.obj");
+}
+```
+
+</details>

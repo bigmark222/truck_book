@@ -24,6 +24,8 @@ Normals live in `StandardAttributes`. Common helpers from `truck_meshalgo::filte
 
 They return new meshes with missing normals filled in.
 
+For in-place updates during a filter pipeline, `NormalFilters` also provides `add_naive_normals`, `add_smooth_normals`, and `normalize_normals`.
+
 ## Example: cube with both normal types
 
 ```rust

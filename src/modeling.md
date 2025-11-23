@@ -19,6 +19,10 @@ Unlike triangle meshes (flat approximations), B-reps model exact geometry: true 
 
 Truck includes a complete B-rep system you’ll use in the next sections.
 
+## Tessellate B-reps to meshes
+
+To render or export, B-rep solids are tessellated into polygon meshes. Truck’s meshing layer (`truck-meshalgo`) provides traits like `MeshableShape`, `RobustMeshableShape`, and `MeshedShape` (see `src/tessellation/mod.rs` in the crate) plus a sample driver `examples/tessellate-shape` that turns analytic shapes and CSG trees into OBJ meshes. You’ll typically tessellate once you finish a solid, then pass the mesh through filters (normals, optimization) before viewing it.
+
 ## What you will learn in Chapter 3
 
 - **3.1 Cube**: build an exact cube; see how B-rep solids are assembled.

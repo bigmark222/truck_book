@@ -60,6 +60,19 @@ write_polygon(&mesh, "mirror-ball-with-smooth-normal.obj");
 - `add_naive_normals(true)`: sharp mechanical parts, crisp reflections, debugging face orientation.
 - `add_smooth_normals(angle, true)`: spheres or organic shapes needing soft shading.
 
+## Other cleanup passes
+
+Truck’s filter module (`truck_meshalgo::filters`) also includes:
+
+- `OptimizingFilter`: drop degenerate faces, remove unused attributes, and unify shared vertices beyond simple epsilon merging.
+- `StructuringFilter`: reorganize attributes and faces for cache-friendly rendering.
+
+These are helpful after tessellation or mesh imports to slim OBJ/GLTF exports and avoid artifacts when rendering.
+
+## Subdivision and refinement
+
+Use `Subdivision` filters to add detail to coarse meshes (for example, smoothing a low-poly surface before export). Apply subdivision after cleanup so the refined mesh inherits clean topology and normals.
+
 ## Save and run
 
 Use the existing `write_polygon` helper to export OBJ files, then:
